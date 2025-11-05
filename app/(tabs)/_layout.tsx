@@ -14,7 +14,6 @@ export default function App() {
  const calculateBMI = () => {
   const h = parseFloat(height) / 100;
   const w = parseFloat(weight);
-
   if (!h || !w) return alert('Please enter valid height and weight');
 
   const bmiValue = w / (h * h);
@@ -28,12 +27,11 @@ export default function App() {
     useNativeDriver: true,
   }).start();
 
-  // Set category and background color
   if (bmiValue < 18.5) {
     setCategory('Underweight 😕');
     setBgColor('#1e3a5f');
     const minWeight = 18.5 * h * h;
-    setDiff(parseFloat((minWeight - w).toFixed(1)));
+    setDiff(minWeight - w); // positive number → gain
   } else if (bmiValue <= 25) {
     setCategory('Normal weight 😃');
     setBgColor('#0a192f');
@@ -42,21 +40,21 @@ export default function App() {
     setCategory('Overweight 😐');
     setBgColor('#1e3a5f');
     const maxWeight = 25 * h * h;
-    setDiff(parseFloat((w - maxWeight).toFixed(1)));
+    setDiff(w - maxWeight); // positive number → lose
   }
 };
 
 const getRecommendation = () => {
   if (diff === null) return '';
+  if (diff === 0) return 'Perfect! You are in normal weight 😃';
 
-  if (diff === 0) {
-    return 'Perfect! You are in normal weight 😃';
-  } else if (diff > 0) {
-    return `You need to gain at least ${Math.abs(diff)} kg to reach normal weight`;
+  if (bmi < 18.5) {
+    return `You need to gain ${diff.toFixed(1)} kg to reach normal weight`;
   } else {
-    return `You need to lose at least ${Math.abs(diff)} kg to reach normal weight`;
+    return `You need to lose ${diff.toFixed(1)} kg to reach normal weight`;
   }
 };
+
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: bgColor }}>
