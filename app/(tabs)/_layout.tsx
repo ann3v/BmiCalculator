@@ -52,9 +52,9 @@ const getRecommendation = () => {
   if (diff === 0) {
     return 'Perfect! You are in normal weight 😃';
   } else if (diff > 0) {
-    return `You need to lose at least ${Math.abs(diff)} kg to reach normal weight`;
-  } else {
     return `You need to gain at least ${Math.abs(diff)} kg to reach normal weight`;
+  } else {
+    return `You need to lose at least ${Math.abs(diff)} kg to reach normal weight`;
   }
 };
 
